@@ -10,8 +10,10 @@
 //-------------------------------------------
 // n = 行数.
 // m = 列数.
+// c = 結果のマトリックス.
+// a,b = 和を計算する対象の二つのマトリックス.
 //-------------------------------------------
-void mat_add(double *c, double *a, double *b, int n, int m)
+void matrix_add(double *c, double *a, double *b, int n, int m)
 {
 	int	i = 0;
 	int j = 0;
@@ -29,7 +31,7 @@ void mat_add(double *c, double *a, double *b, int n, int m)
 // n = 行数.
 // m = 列数.
 //-------------------------------------------
-int mat_diff(double *a,double *b, int n, int m)
+int matrix_diff(double *a, double *b, int n, int m)
 {
 	int	i = 0;
 	int j = 0;
@@ -48,7 +50,7 @@ int mat_diff(double *a,double *b, int n, int m)
 // マトリックスの初期化.
 // ランダムな値で初期化する.
 //-------------------------------------------
-void mat_init(double *a, int n, int m)
+void matrix_init(double *a, int n, int m)
 {
 	for(int i = 0; i < n; i++){
 		for(int j = 0; j < m; j++){
@@ -62,7 +64,7 @@ void mat_init(double *a, int n, int m)
 // マトリックスの初期化.
 // ゼロ初期化.
 //-------------------------------------------
-void mat_init_zero(double *a, int n, int m)
+void matrix_init_zero(double *a, int n, int m)
 {
 	memset(a, 0x00, n * m * sizeof(double) );
 }
@@ -72,7 +74,7 @@ void mat_init_zero(double *a, int n, int m)
 // a = コピーされる行列.
 // b = コピーする行列.
 //-------------------------------------------
-void mat_copy(double *a, const double *b, int n, int m)
+void matrix_copy(double *a, const double *b, int n, int m)
 {
 	memcpy(a, b, n * m * sizeof(double) );
 }
@@ -80,7 +82,7 @@ void mat_copy(double *a, const double *b, int n, int m)
 //-------------------------------------------
 // マトリックスの表示.
 //-------------------------------------------
-void mat_print(double *a, int n, int m)
+void matrix_print(double *a, int n, int m)
 {
 	for(int i = 0; i < n; i++){
 		for(int j = 0; j < m; j++){
@@ -96,7 +98,7 @@ void mat_print(double *a, int n, int m)
 // マトリックスの表示.
 // 転置版.
 //-------------------------------------------
-void mat_print_t(double *a, int n, int m)
+void matrix_print_t(double *a, int n, int m)
 {
 	for(int i = 0; i < m; i++){
 		for(int j = 0; j < n; j++){
@@ -117,7 +119,7 @@ void mat_print_t(double *a, int n, int m)
 // m = a の列数、b の行数.
 // n = b の列数.
 //-------------------------------------------
-void mat_x(double *c, double *a, double *b, int l, int m, int n)
+void matrix_x(double *c, double *a, double *b, int l, int m, int n)
 {
 	double t = 0;
 	for(int i = 0; i < l; i++){
@@ -140,7 +142,7 @@ void mat_x(double *c, double *a, double *b, int l, int m, int n)
 // m = a の列数、b の行数.
 // n = b の列数.
 //-------------------------------------------
-void mat_divide(double *c, double *a, double *b, int l, int m, int n)
+void matrix_divide(double *c, double *a, double *b, int l, int m, int n)
 {
 	double t = 0;
 	for(int i = 0; i < n; i++){
@@ -164,7 +166,7 @@ void mat_divide(double *c, double *a, double *b, int l, int m, int n)
 // m = 行数.
 // n = 列数.
 //-------------------------------------------
-void mat_x(double *c, double *a, double *b, int m, int n)
+void matrix_x(double *c, double *a, double *b, int m, int n)
 {
 	for(int i = 0; i < m; i++){
 		for(int j = 0; j < n; j++){
@@ -182,7 +184,7 @@ void mat_x(double *c, double *a, double *b, int m, int n)
 // m = 行数.
 // n = 列数.
 //-------------------------------------------
-void mat_divide(double *c, double *a, double *b, int m, int n)
+void matrix_divide(double *c, double *a, double *b, int m, int n)
 {
 	for(int i = 0; i < m; i++){
 		for(int j = 0; j < n; j++){
@@ -199,7 +201,7 @@ void mat_divide(double *c, double *a, double *b, int m, int n)
 // n = aの行数.
 // m = aの列数.
 //-------------------------------------------
-void mat_transpose(double *a, double *b, int n, int m)
+void matrix_transpose(double *a, double *b, int n, int m)
 {
 	for(int i = 0; i < n; i++){
 		for(int j = 0; j < m; j++){
@@ -218,14 +220,14 @@ void mat_transpose(double *a, double *b, int n, int m)
 // m = a の行数、b の行数.
 // n = b の列数.
 //-------------------------------------------
-void mat_left_transpose_x(double *c, double *a, double *b, int l, int m, int n)
+void matrix_left_transpose_x(double *c, double *a, double *b, int l, int m, int n)
 {
 	double *t = new double[l * m];
-	mat_init_zero( t, l, m);
+	matrix_init_zero(t, l, m);
     
-	mat_transpose(a, t, l, m);
+	matrix_transpose(a, t, l, m);
     
-	mat_x( c, t, b, l, m, n);
+	matrix_x(c, t, b, l, m, n);
     
 	delete[] t;
 	t = NULL;
@@ -241,14 +243,14 @@ void mat_left_transpose_x(double *c, double *a, double *b, int l, int m, int n)
 // m = a の列数、b の列数.
 // n = b の行数.
 //-------------------------------------------
-void mat_right_transpose_x(double *c,double *a,double *b, int l, int m, int n)
+void matrix_right_transpose_x(double *c, double *a, double *b, int l, int m, int n)
 {
 	double *t = new double[n * m];
-	mat_init_zero( t, n,  m);
+	matrix_init_zero(t, n, m);
     
-	mat_transpose( b, t, n, m);
+	matrix_transpose(b, t, n, m);
 	
-	mat_x( c, a, t, l, m, n);
+	matrix_x(c, a, t, l, m, n);
 	
 	delete[] t;
 	t = NULL;
@@ -267,7 +269,7 @@ void mat_right_transpose_x(double *c,double *a,double *b, int l, int m, int n)
 // m = a の行数、b の行数.
 // n = b の列数.
 //-------------------------------------------
-void mat_tx_left(double *c, double *a, double *b, int l, int m, int n)
+void matrix_tx_left(double *c, double *a, double *b, int l, int m, int n)
 {
 	double t = 0;
 	for(int i = 0; i < l; i++){
@@ -293,7 +295,7 @@ void mat_tx_left(double *c, double *a, double *b, int l, int m, int n)
 // m = a の列数、b の列数.
 // n = b の行数.
 //-------------------------------------------
-void mat_tx_right(double *c,double *a,double *b, int l, int m, int n)
+void matrix_tx_right(double *c, double *a, double *b, int l, int m, int n)
 {
 	double t = 0;
 	for(int i = 0; i < l; i++){
@@ -336,21 +338,21 @@ void factorize(double *v, int raw, int col, int features, unsigned int count)
     
 	// 重みと特徴の乗算結果用行列.
 	double wh[DOCUMENTS][DATAS];
-	mat_init_zero( (double*)wh, DOCUMENTS, DATAS);
+	matrix_init_zero((double*)wh, DOCUMENTS, DATAS);
     
     
-	mat_init( (double*)h, FEATURES, DATAS);
-	mat_init_zero( (double*)hn, FEATURES, DATAS);
-	mat_init_zero( (double*)hd, FEATURES, DATAS);
-	mat_init_zero( (double*)hd_t, FEATURES, FEATURES);
-	mat_init( (double*)w, DOCUMENTS, FEATURES);
-	mat_init_zero( (double*)wn, DOCUMENTS, FEATURES);
-	mat_init_zero( (double*)wd, DOCUMENTS, FEATURES);
-	mat_init_zero( (double*)wd_t, DOCUMENTS, DATAS);
+	matrix_init((double*)h, FEATURES, DATAS);
+	matrix_init_zero((double*)hn, FEATURES, DATAS);
+	matrix_init_zero((double*)hd, FEATURES, DATAS);
+	matrix_init_zero((double*)hd_t, FEATURES, FEATURES);
+	matrix_init((double*)w, DOCUMENTS, FEATURES);
+	matrix_init_zero((double*)wn, DOCUMENTS, FEATURES);
+	matrix_init_zero((double*)wd, DOCUMENTS, FEATURES);
+	matrix_init_zero((double*)wd_t, DOCUMENTS, DATAS);
     
     
-	mat_print((double*)h, FEATURES, DATAS);
-	mat_print((double*)w, DOCUMENTS, FEATURES);
+	matrix_print((double*)h, FEATURES, DATAS);
+	matrix_print((double*)w, DOCUMENTS, FEATURES);
     
     
 	unsigned int i = 0;
@@ -359,8 +361,8 @@ void factorize(double *v, int raw, int col, int features, unsigned int count)
 		v = (double*)nARRAY;
         
 		// 特徴の重みの行列の積から、元データとの差を計算する.
-		mat_x( (double*)wh, (double*)w, (double*)h, DOCUMENTS, FEATURES, DATAS);
-		int cost = mat_diff( v, (double*)wh, DOCUMENTS, DATAS);
+		matrix_x((double*)wh, (double*)w, (double*)h, DOCUMENTS, FEATURES, DATAS);
+		int cost = matrix_diff(v, (double*)wh, DOCUMENTS, DATAS);
 		
 		// 差が完全にゼロになったらループを抜ける.
 		if(cost == 0){
@@ -371,15 +373,15 @@ void factorize(double *v, int raw, int col, int features, unsigned int count)
 		// 特徴の行列を更新する.
 		//-------------------------------------------------------------------------------------------
 		// hn　転置した重みの行列にデータ行列を掛け合わせたもの
-		mat_tx_left( (double*)hn, (double*)w, v, FEATURES , DOCUMENTS, DATAS);
+		matrix_tx_left((double*)hn, (double*)w, v, FEATURES, DOCUMENTS, DATAS);
         
 		// hd  転置した重みの行列に重みの行列を掛け合わせたものに特徴の行列を掛け合わせたもの
-		mat_tx_left( (double*)hd_t, (double*)w, (double*)w, FEATURES, DOCUMENTS, FEATURES);
-		mat_x( (double*)hd, (double*)hd_t, (double*)h, FEATURES, FEATURES, DATAS);
+		matrix_tx_left((double*)hd_t, (double*)w, (double*)w, FEATURES, DOCUMENTS, FEATURES);
+		matrix_x((double*)hd, (double*)hd_t, (double*)h, FEATURES, FEATURES, DATAS);
         
         
-		mat_x( (double*)h, (double*)h, (double*)hn, FEATURES, DATAS);
-		mat_divide( (double*)h, (double*)h, (double*)hd, FEATURES, DATAS);
+		matrix_x((double*)h, (double*)h, (double*)hn, FEATURES, DATAS);
+		matrix_divide((double*)h, (double*)h, (double*)hd, FEATURES, DATAS);
         
         
         
@@ -388,22 +390,22 @@ void factorize(double *v, int raw, int col, int features, unsigned int count)
 		//-------------------------------------------------------------------------------------------
         
 		// wn  データ行列に転置した特長の行列を掛け合わせたもの.
-		mat_tx_right( (double*)wn, v, (double*)h, DOCUMENTS, DATAS, FEATURES);
+		matrix_tx_right((double*)wn, v, (double*)h, DOCUMENTS, DATAS, FEATURES);
         
 		// wd  重みの行列に、特徴の行列を掛け合わせたものに転置した特長の行列を掛け合わせたもの.
-		mat_x( (double*)wd_t, (double*)w, (double*)h, DOCUMENTS, FEATURES, DATAS);
-		mat_tx_right( (double*)wd, (double*)wd_t, (double*)h, DOCUMENTS, DATAS, FEATURES);
+		matrix_x((double*)wd_t, (double*)w, (double*)h, DOCUMENTS, FEATURES, DATAS);
+		matrix_tx_right((double*)wd, (double*)wd_t, (double*)h, DOCUMENTS, DATAS, FEATURES);
 		
-		mat_x( (double*)w, (double*)w, (double*)wn, DOCUMENTS, FEATURES);
-		mat_divide( (double*)w, (double*)w, (double*)wd, DOCUMENTS, FEATURES);
+		matrix_x((double*)w, (double*)w, (double*)wn, DOCUMENTS, FEATURES);
+		matrix_divide((double*)w, (double*)w, (double*)wd, DOCUMENTS, FEATURES);
         
 	}
 	
-	mat_print((double*)h, FEATURES, DATAS);
-	mat_print((double*)w, DOCUMENTS, FEATURES);
+	matrix_print((double*)h, FEATURES, DATAS);
+	matrix_print((double*)w, DOCUMENTS, FEATURES);
     
-	mat_x( (double*)wh, (double*)w, (double*)h, DOCUMENTS, FEATURES, DATAS);
-	mat_print((double*)wh, DOCUMENTS, DATAS);
+	matrix_x((double*)wh, (double*)w, (double*)h, DOCUMENTS, FEATURES, DATAS);
+	matrix_print((double*)wh, DOCUMENTS, DATAS);
 }
 
 int main(int argc, char* argv[])
