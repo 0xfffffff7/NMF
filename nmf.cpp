@@ -54,7 +54,7 @@ void matrix_init(double *a, const int n, const int m)
 {
 	for(int i = 0; i < n; i++){
 		for(int j = 0; j < m; j++){
-			*( a + (i * m + j) ) = (double) (rand() % 10 + 7);
+			*( a + (i * m + j) ) = (double) (rand() % 1000);
 			srand( (unsigned int)time(NULL) ^ i + j);
 		}
 	}
@@ -81,14 +81,27 @@ void matrix_copy(double *a, const double *b, const int n, const int m)
 
 //-------------------------------------------
 // マトリックスの表示.
+// coefficient = 表示する時に乗ずる値.
+// bDisplayPoint = 小数点以下を表示するかしないか.
 //-------------------------------------------
-void matrix_print(const double *a, const int n, const int m)
+void matrix_print(const double *a, const int n, const int m, int coefficient = 1, bool bDisplayPoint = false)
 {
-	for(int i = 0; i < n; i++){
-		for(int j = 0; j < m; j++){
-			printf("%f ", *( a + (i * m + j )) );
+	if (bDisplayPoint){
+		for (int i = 0; i < n; i++){
+			for (int j = 0; j < m; j++){
+				printf("%f ", *(a + (i * m + j)) * coefficient);
+			}
+			printf("\n");
 		}
-		printf("\n");
+	}
+	else{
+		for (int i = 0; i < n; i++){
+			for (int j = 0; j < m; j++){
+				printf("%d ", (int)(*(a + (i * m + j)) * coefficient));
+			}
+			printf("\n");
+		}
+
 	}
     
 	printf("\n");
@@ -423,6 +436,7 @@ int main(int argc, char* argv[])
 	int FEATURES = 2;
 	int ROW = 5;
 	int COL = 4;
+	int COUNT = 5000;
 
 	const double nARRAY[5][4]
 		= { { 50.0, 50.0, 50.0, 50.0 },
@@ -433,10 +447,10 @@ int main(int argc, char* argv[])
 	};
 
 	MatrixFactor *mf = new MatrixFactor();
-	factorize((double*)nARRAY, ROW, COL, FEATURES, 5000, mf);
+	factorize((double*)nARRAY, ROW, COL, FEATURES, COUNT, mf);
 
 	matrix_print(mf->w, ROW, FEATURES);
-	matrix_print(mf->h, FEATURES, COL);
+	matrix_print(mf->h, FEATURES, COL, 1000);
 
 	return 0;
 }
