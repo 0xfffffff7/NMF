@@ -446,7 +446,7 @@ int main(int argc, char* argv[])
 		{ 10.0, 100.0, 90.0, 20.0 }
 	};
 
-	MatrixFactor mf = MatrixFactor();
+	MatrixFactor mf;
 	factorize((double*)nARRAY, ROW, COL, FEATURES, COUNT, &mf);
 
 	matrix_print(mf.w, ROW, FEATURES);
